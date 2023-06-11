@@ -1,0 +1,45 @@
+body {
+  background-color: #f5f5f5; /* Background light gris pour la page */
+}
+
+h2 {
+  text-align: center; /* Centrer le titre */
+  font-family: Arial, sans-serif; /* Utiliser une police de caractères adaptée */
+  color: #333; /* Couleur du texte */
+  margin-top: 20px; /* Ajouter une marge en haut */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto; /* Ajouter une marge et centrer le tableau horizontalement */
+  border: 1px solid #ccc; /* Ajouter une bordure */
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.red-ball, .green-ball {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.red-ball {
+  background-color: red;
+}
+
+.green-ball {
+  background-color: green;
+}

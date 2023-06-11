@@ -1,3 +1,5 @@
+
+/******/
 document.addEventListener('DOMContentLoaded', async () => {
   const tableBody = document.querySelector('#table-body');
 
@@ -15,27 +17,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const uniqueItems = []; // Tableau pour stocker les éléments uniques
 
-    for (const newItem of data) {
-      console.log("item", newItem);
-      const duplicateItems = data.filter(item =>
-        item.id_piscine === newItem.id_piscine && item.id_user === newItem.id_user
+    for (const item of data) {
+      // Vérifier si l'élément existe déjà dans le tableau uniqueItems
+      const duplicateItems = uniqueItems.filter(existingItem =>
+        existingItem.id_user === item.id_user && existingItem.id_piscine === item.id_piscine
       );
 
-      if (duplicateItems.length === 1) {
+      if (duplicateItems.length === 0) {
+        // L'élément est unique, l'ajouter au tableau uniqueItems
+        uniqueItems.push(item);
+      } else if (duplicateItems.length === 1) {
+        // La deuxième occurrence de l'élément, afficher cette occurrence
         const existingItem = duplicateItems[0];
-        Object.assign(existingItem, newItem); // Remplacer les valeurs de l'élément existant
-        uniqueItems.push(existingItem); // Ajouter à la liste des éléments uniques
-      } else {
-        for (const duplicateItem of duplicateItems) {
-          const index = data.indexOf(duplicateItem);
-          data.splice(index, 1); // Supprimer l'élément de la liste
-        }
+        Object.assign(existingItem, item); // Remplacer les valeurs de l'élément existant
       }
     }
 
     for (const item of uniqueItems) {
       // ... le reste du code pour créer les lignes du tableau
-      console.log("item", item);
+      console.log("Unique item", item);
       const row = document.createElement('tr');
 
       const idUserCell = document.createElement('td');
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const nomUserCell = document.createElement('td');
       nomUserCell.textContent = item.Nom_user;
       row.appendChild(nomUserCell);
-     
+
       const idPiscineCell = document.createElement('td');
       idPiscineCell.textContent = item.id_piscine;
       row.appendChild(idPiscineCell);
@@ -98,11 +98,186 @@ document.addEventListener('DOMContentLoaded', async () => {
   etatLedCell.appendChild(ledSpan);
   row.appendChild(etatLedCell);
   tableBody.appendChild(row);
+    
+
+      // Le reste des cellules de données...
+
+      tableBody.appendChild(row);
     }
   } catch (error) {
     console.error(error);
   }
 });
+
+ 
+ /*********/
+
+
+/*
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const tableBody = document.querySelector('#table-body');
+
+  try {
+    const response = await fetch('https://iotwebservice-kspm.onrender.com/get', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    });
+    let data = await response.json();
+
+    console.log("data =", data);
+
+
+    
+    const uniqueItems = []; // Tableau pour stocker les éléments uniques
+
+    for (const item of data) {
+      console.log("Uniqueitem", item);
+      const row = document.createElement('tr');
+
+      const idUserCell = document.createElement('td');
+      idUserCell.textContent = item.id_user;
+      row.appendChild(idUserCell);
+
+      const nomUserCell = document.createElement('td');
+      nomUserCell.textContent = item.Nom_user;
+      row.appendChild(nomUserCell);
+     
+      const idPiscineCell = document.createElement('td');
+      idPiscineCell.textContent = item.id_piscine;
+      row.appendChild(idPiscineCell);
+
+      const distanceCell = document.createElement('td');
+      distanceCell.textContent = item.distance;
+      row.appendChild(distanceCell);
+
+
+      const ville = await findVille(item.lan_piscine, item.lat_piscine);
+      const villeCell = document.createElement('td');
+      villeCell.textContent = ville;
+      row.appendChild(villeCell);
+
+     
+  
+
+      const tempPiscineCell = document.createElement('td');
+      tempPiscineCell.textContent = item.temp_piscine;
+      row.appendChild(tempPiscineCell);
+
+      
+      const dateEntreeCell = document.createElement('td');
+      dateEntreeCell.textContent = item.Date_d_entree;
+      row.appendChild(dateEntreeCell);
+
+      const dateSortieCell = document.createElement('td');
+      dateSortieCell.textContent = "n'est pas sortie";
+      row.appendChild(dateSortieCell);
+
+      const etatLedCell = document.createElement('td');
+
+      const ledSpan = document.createElement('span');
+      if (item.etat_led) {
+      ledSpan.innerText = 'Rouge';
+      ledSpan.style.color = 'red';
+      } else {
+  ledSpan.innerText = 'Vert';
+  ledSpan.style.color = 'green';
+}
+
+  etatLedCell.appendChild(ledSpan);
+  row.appendChild(etatLedCell);
+  tableBody.appendChild(row);
+    }
+    */
+     
+      /*
+      console.log("item", newItem);
+      const duplicateItems = data.filter(item =>
+        item.id_piscine === newItem.id_piscine && item.id_user === newItem.id_user
+      );
+
+      if (duplicateItems.length === 1) {
+        const existingItem = duplicateItems[0];
+        Object.assign(existingItem, newItem); // Remplacer les valeurs de l'élément existant
+        uniqueItems.push(existingItem); // Ajouter à la liste des éléments uniques
+      } else {
+        for (const duplicateItem of duplicateItems) {
+          const index = data.indexOf(duplicateItem);
+          data.splice(index, 1); // Supprimer l'élément de la liste
+        }
+      }
+      */
+    
+    /*
+    console.log("UniqueitemLength", uniqueItems.length);
+    
+    for (const item of uniqueItems) {
+
+      // ... le reste du code pour créer les lignes du tableau
+      console.log("Uniqueitem", item);
+      const row = document.createElement('tr');
+
+      const idUserCell = document.createElement('td');
+      idUserCell.textContent = item.id_user;
+      row.appendChild(idUserCell);
+
+      const nomUserCell = document.createElement('td');
+      nomUserCell.textContent = item.Nom_user;
+      row.appendChild(nomUserCell);
+     
+      const idPiscineCell = document.createElement('td');
+      idPiscineCell.textContent = item.id_piscine;
+      row.appendChild(idPiscineCell);
+
+      const distanceCell = document.createElement('td');
+      distanceCell.textContent = item.distance;
+      row.appendChild(distanceCell);
+
+
+      const ville = await findVille(item.lan_piscine, item.lat_piscine);
+      const villeCell = document.createElement('td');
+      villeCell.textContent = ville;
+      row.appendChild(villeCell);
+
+     
+
+      const tempPiscineCell = document.createElement('td');
+      tempPiscineCell.textContent = item.temp_piscine;
+      row.appendChild(tempPiscineCell);
+
+      
+      const dateEntreeCell = document.createElement('td');
+      dateEntreeCell.textContent = item.Date_d_entree;
+      row.appendChild(dateEntreeCell);
+
+      const dateSortieCell = document.createElement('td');
+      dateSortieCell.textContent = "n'est pas sortie";
+      row.appendChild(dateSortieCell);
+
+      const etatLedCell = document.createElement('td');
+
+      const ledSpan = document.createElement('span');
+      if (item.etat_led) {
+      ledSpan.innerText = 'Rouge';
+      ledSpan.style.color = 'red';
+      } else {
+  ledSpan.innerText = 'Vert';
+  ledSpan.style.color = 'green';
+}
+
+  etatLedCell.appendChild(ledSpan);
+  row.appendChild(etatLedCell);
+  tableBody.appendChild(row);
+    }
+    
+  } catch (error) {
+    console.error(error);
+  }
+});
+*/
 
 async function findVille(lan, lat) {
   console.log("latitude :", lat);
@@ -151,12 +326,4 @@ function checkCoteAzur(lat, lon) {
     return false;
   }
 }
-
-
-
-
-
-
-
-
 
